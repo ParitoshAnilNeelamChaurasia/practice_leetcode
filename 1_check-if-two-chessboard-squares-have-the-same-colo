@@ -1,0 +1,20 @@
+// https://leetcode.com/problems/check-if-two-chessboard-squares-have-the-same-color/
+
+class Solution {
+public:
+    bool checkTwoChessboards(string cord1, string cord2) {
+        
+        int f_first = cord1[0] - 'a' + 1;
+        int s_first = cord1[1] - '0';
+
+        int first = f_first + s_first;
+
+        int f_second = cord2[0] - 'a' + 1;
+        int s_second = cord2[1] - '0';
+
+        int second = f_second + s_second;
+
+        // Check if both sums have the same parity (both even or both odd)
+        return first % 2 == second % 2;
+    }
+};
