@@ -1,0 +1,49 @@
+// https://leetcode.com/problems/largest-rectangle-in-histogram/
+
+class Solution
+{
+public:
+    int largestRectangleArea(vector<int> &heights)
+    {
+        int n = heights.size();
+
+        // Arrays to store the previous and next smaller element indices
+        vector<int> prev_small(n), after_small(n);
+
+        // Finding the previous smaller element for each bar
+        prev_small[0] = -1; // No previous smaller element for the first bar
+        for (int i = 1; i < n; ++i)
+        {
+            int l = i - 1;
+            // Move to the left until a smaller element is found
+            while (l >= 0 && heights[l] >= heights[i])
+            {
+                l = prev_small[l];
+            }
+            prev_small[i] = l;
+        }
+
+        // Finding the next smaller element for each bar
+        after_small[n - 1] = n; // No next smaller element for the last bar
+        for (int i = n - 2; i >= 0; --i)
+        {
+            int r = i + 1;
+            // Move to the right until a smaller element is found
+            while (r < n && heights[r] >= heights[i])
+            {
+                r = after_small[r];
+            }
+            after_small[i] = r;
+        }
+
+        // Calculating the maximum area
+        int mx = 0;
+        for (int i = 0; i < n; ++i)
+        {
+            int width = after_small[i] - prev_small[i] - 1;
+            mx = max(mx, width * heights[i]);
+        }
+
+        return mx;
+    }
+};
