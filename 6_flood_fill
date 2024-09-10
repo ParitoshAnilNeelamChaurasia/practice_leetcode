@@ -1,0 +1,51 @@
+// https://leetcode.com/problems/flood-fill/
+
+class Solution {
+public:
+    vector<vector<int>> ans;
+    int m;
+    int n;
+
+    // Directions for right, down, left, and up
+    vector<vector<int>> dir = {
+        {0, 1},   // Right
+        {1, 0},   // Down
+        {0, -1},  // Left
+        {-1, 0}   // Up
+    };
+
+    // Check if the current position is out of bounds
+    bool is_valid(int i, int j) {
+        return i >= 0 && i < m && j >= 0 && j < n;
+    }
+
+    void floodFillHelper(vector<vector<int>>& image, int sr, int sc, int color, int startColor) {
+        // If the current pixel is out of bounds or not the target color, return
+        if (!is_valid(sr, sc) || image[sr][sc] != startColor) {
+            return;
+        }
+
+        // Update the current pixel to the new color
+        image[sr][sc] = color;
+
+        // Explore all four directions
+        for (auto& d : dir) {
+            int x = sr + d[0];
+            int y = sc + d[1];
+            floodFillHelper(image, x, y, color, startColor);
+        }
+    }
+
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        m = image.size();
+        n = image[0].size();
+        int startColor = image[sr][sc];
+        
+        // If the new color is the same as the current color, no need to change
+        if (startColor != color) {
+            floodFillHelper(image, sr, sc, color, startColor);
+        }
+        
+        return image;
+    }
+};
