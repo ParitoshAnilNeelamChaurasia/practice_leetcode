@@ -1,0 +1,55 @@
+// https://practice.geeksforgeeks.org/contest/hiring-mts-geeksforgeeks/problems
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+
+class Solution {
+  public:
+    int maxSplits(string s, string t) {
+        int m = s.size() ;
+        int n = t.size() ;
+        
+        unordered_map<char,int> mp_s , mp_t ;
+        
+        int count = 0 ;
+        
+        for(int i = 0 ; i < m ; ++i)
+        {
+            mp_s[s[i]]++ ;
+            mp_t[t[i]]++ ;
+            
+            if(mp_s == mp_t)
+            {
+                count++ ;
+            }
+        }
+        return count ;
+    }
+};
+
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    scanf("%d ", &t);
+    while (t--) {
+
+        string s;
+        getline(cin, s);
+
+        string t;
+        getline(cin, t);
+
+        Solution obj;
+        int res = obj.maxSplits(s, t);
+
+        cout << res << endl;
+    }
+}
+
+// } Driver Code Ends
